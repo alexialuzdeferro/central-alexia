@@ -48,6 +48,7 @@
       animation: particles 22s linear infinite;
       opacity: 0.08;
       z-index: -2;
+      pointer-events: none;
     }
 
     @keyframes particles { to { transform: translate(-100px, -100px); } }
@@ -58,15 +59,15 @@
       inset: 0;
       background: repeating-linear-gradient(
         0deg,
-        rgba(255, 0, 110, 0.025) 0px,
-        rgba(255, 0, 110, 0.025) 1px,
+        rgba(255, 0, 110, 0.020) 0px,
+        rgba(255, 0, 110, 0.020) 1px,
         transparent 1px,
         transparent 3px
       );
       pointer-events: none;
       z-index: 50;
       mix-blend-mode: overlay;
-      opacity: 0.8;
+      opacity: 0.7;
     }
 
     /* Motion safety */
@@ -78,7 +79,7 @@
 
     header {
       position: relative;
-      min-height: 92vh;
+      min-height: 86vh;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -99,8 +100,9 @@
         radial-gradient(circle at 50% 80%, var(--vein-blue), transparent 48%);
       animation: gradient-shift 12s ease-in-out infinite;
       filter: blur(110px);
-      opacity: 0.38;
+      opacity: 0.36;
       z-index: -1;
+      pointer-events: none;
     }
 
     @keyframes gradient-shift {
@@ -111,7 +113,7 @@
     .logo-container {
       width: 190px;
       height: 190px;
-      margin: 0 auto 1.75rem;
+      margin: 0 auto 1.5rem;
       border-radius: 9999px;
       background: var(--glass-bg);
       backdrop-filter: blur(12px);
@@ -139,7 +141,7 @@
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      margin-bottom: 0.75rem;
+      margin-bottom: 0.65rem;
       text-transform: uppercase;
       letter-spacing: 0.05em;
       filter: drop-shadow(0 0 18px rgba(255, 0, 110, 0.35));
@@ -148,7 +150,7 @@
     .subtitle {
       font-size: clamp(1rem, 2.8vw, 1.5rem);
       color: var(--vein-blue);
-      margin-bottom: 0.75rem;
+      margin-bottom: 0.65rem;
       text-shadow: 0 0 16px rgba(6, 255, 165, 0.22);
     }
 
@@ -156,47 +158,8 @@
       font-size: clamp(0.95rem, 2.3vw, 1.12rem);
       color: rgba(255, 255, 255, 0.82);
       max-width: 920px;
-      margin: 0.75rem auto 2.25rem;
+      margin: 0.6rem auto 0;
       line-height: 1.65;
-    }
-
-    .cta-visceral {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.6rem;
-      padding: 1.05rem 2.6rem;
-      font-size: 1.05rem;
-      font-weight: 800;
-      text-decoration: none;
-      color: var(--bone-white);
-      background: linear-gradient(135deg, rgba(255, 0, 110, 0.95), rgba(131, 56, 236, 0.95));
-      border-radius: 9999px;
-      position: relative;
-      overflow: hidden;
-      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
-      box-shadow: 0 10px 34px rgba(255, 0, 110, 0.25);
-      letter-spacing: 0.05em;
-      border: 1px solid rgba(6, 255, 165, 0.22);
-    }
-
-    .cta-visceral::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      transform: translateX(-110%);
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.18), transparent);
-      transition: transform 0.55s ease;
-    }
-
-    .cta-visceral:hover::before { transform: translateX(110%); }
-
-    .cta-visceral:hover {
-      transform: translateY(-4px);
-      box-shadow:
-        0 16px 56px rgba(255, 0, 110, 0.32),
-        0 0 26px rgba(6, 255, 165, 0.18);
-      border-color: rgba(6, 255, 165, 0.52);
     }
 
     .section-visceral {
@@ -245,8 +208,10 @@
       transition: transform 0.28s ease, box-shadow 0.28s ease, border-color 0.28s ease;
       position: relative;
       overflow: hidden;
+      z-index: 0;
     }
 
+    /* Garante que NADA fique por cima dos links */
     .card-blade::before {
       content: '';
       position: absolute;
@@ -255,7 +220,11 @@
       transform: rotate(35deg) translateX(-35%);
       opacity: 0;
       transition: opacity 0.35s ease;
+      pointer-events: none;
+      z-index: 0;
     }
+
+    .card-blade > * { position: relative; z-index: 1; }
 
     .card-blade:hover::before { opacity: 0.09; }
 
@@ -300,6 +269,8 @@
       font-size: 0.86rem;
       transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
       user-select: none;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
     }
 
     .link-cut:hover {
@@ -479,6 +450,7 @@
       text-decoration: none;
       font-size: 1.4rem;
       transition: transform 0.22s ease, background 0.22s ease, color 0.22s ease, border-color 0.22s ease;
+      -webkit-tap-highlight-color: transparent;
     }
 
     .social-link:hover {
@@ -491,53 +463,54 @@
 
     .footer-text { color: rgba(255, 255, 255, 0.62); margin-top: 1.6rem; line-height: 1.65; }
 
-    /* Counter (mais discreto) */
+    /* Counter (mais transparente e discreto) */
     .access-counter {
       position: fixed;
-      bottom: 14px;
-      right: 14px;
+      bottom: 12px;
+      right: 12px;
       z-index: 55;
-      font-size: 0.84rem;
-      opacity: 0.72;
+      font-size: 0.78rem;
+      opacity: 0.52;
       transition: opacity 0.2s ease;
     }
 
-    .access-counter:hover { opacity: 0.95; }
+    .access-counter:hover { opacity: 0.85; }
 
     .counter-container {
-      background: rgba(0, 0, 0, 0.35);
+      background: rgba(0, 0, 0, 0.22);
       backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 0, 110, 0.28);
+      border: 1px solid rgba(255, 0, 110, 0.18);
       border-radius: 9999px;
-      padding: 7px 10px;
+      padding: 6px 9px;
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      box-shadow: 0 10px 35px rgba(0,0,0,0.25);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.18);
     }
 
-    .counter-icon { color: rgba(6, 255, 165, 0.9); font-size: 1rem; }
+    .counter-icon { color: rgba(6, 255, 165, 0.9); font-size: 0.95rem; }
 
-    .counter-text { color: rgba(255,255,255,0.78); font-weight: 700; }
+    .counter-text { color: rgba(255,255,255,0.68); font-weight: 700; }
 
     .counter-number { color: rgba(6,255,165,0.95); font-weight: 900; font-variant-numeric: tabular-nums; }
 
     .counter-close {
       margin-left: 2px;
-      width: 26px;
-      height: 26px;
+      width: 24px;
+      height: 24px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
       border-radius: 9999px;
-      border: 1px solid rgba(255,255,255,0.14);
-      background: rgba(0,0,0,0.22);
-      color: rgba(255,255,255,0.76);
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(0,0,0,0.18);
+      color: rgba(255,255,255,0.70);
       cursor: pointer;
-      transition: transform 0.18s ease, border-color 0.18s ease;
+      transition: transform 0.18s ease, border-color 0.18s ease, opacity 0.18s ease;
+      opacity: 0.85;
     }
 
-    .counter-close:hover { transform: scale(1.05); border-color: rgba(6,255,165,0.45); }
+    .counter-close:hover { transform: scale(1.05); border-color: rgba(6,255,165,0.45); opacity: 1; }
 
     /* Scrollbar */
     ::-webkit-scrollbar { width: 10px; }
@@ -547,7 +520,7 @@
 
     @media (max-width: 768px) {
       .logo-container { width: 170px; height: 170px; }
-      .access-counter { bottom: 10px; right: 10px; font-size: 0.8rem; opacity: 0.68; }
+      .access-counter { bottom: 10px; right: 10px; font-size: 0.76rem; opacity: 0.55; }
       .social-link { width: 50px; height: 50px; font-size: 1.25rem; }
     }
   </style>
@@ -587,12 +560,9 @@
         🏳️‍⚧️ Guardiã dos Mistérios das Pombagiras | Criadora de Portais Espirituais |
         Energia Trans • Não-Binária • Fluida • Livre • Visceral
       </p>
-      <a href="#explorar" class="cta-visceral"><span aria-hidden="true">✨</span> Explore Meu Universo</a>
 
-      <div class="mt-8 flex flex-wrap items-center justify-center gap-3 text-sm text-white/70">
-        <span class="meta-pill">🔗 <strong class="text-white/90" id="totalLinks">42</strong> links</span>
-        <span class="meta-pill">🧭 Busca e filtros</span>
-        <span class="meta-pill">🖼️ Galeria com zoom</span>
+      <div class="mt-8">
+        <a href="#explorar" class="link-cut" style="padding:0.55rem 1rem;">⬇️ <span>Ir para os Portais</span></a>
       </div>
     </div>
   </header>
@@ -668,7 +638,7 @@
       <div class="modal-top">
         <div class="truncate" id="modalTitle">Imagem</div>
         <div class="flex items-center gap-2">
-          <button id="modalOpen" type="button" title="Abrir em nova aba">Abrir</button>
+          <button id="modalOpen" type="button" title="Abrir">Abrir</button>
           <button id="modalClose" type="button" title="Fechar">Fechar</button>
         </div>
       </div>
@@ -682,9 +652,9 @@
     <p class="tagline">Siga minha jornada espiritual, trans, não-binária e cheia de vida</p>
 
     <div class="social-links">
-      <a href="https://linktr.ee/alexiarosadefogo" class="social-link" target="_blank" rel="noopener" title="Linktree">🔗</a>
-      <a href="https://bio.site/AlmasdePombagira" class="social-link" target="_blank" rel="noopener" title="Bio.site">🌐</a>
-      <a href="https://pombagiras.my.canva.site/" class="social-link" target="_blank" rel="noopener" title="Site Canva">🌹</a>
+      <a href="https://linktr.ee/alexiarosadefogo" class="social-link" title="Linktree">🔗</a>
+      <a href="https://bio.site/AlmasdePombagira" class="social-link" title="Bio.site">🌐</a>
+      <a href="https://pombagiras.my.canva.site/" class="social-link" title="Site Canva">🌹</a>
       <a href="#explorar" class="social-link" title="Voltar aos links">⬆️</a>
     </div>
 
@@ -815,11 +785,11 @@
     ];
 
     function flattenLinks() {
-      return PORTALS.flatMap(group => group.links.map(l => ({...l, category: group.category})));
+      return PORTALS.flatMap(group => group.links.map(l => ({ ...l, category: group.category })));
     }
 
     // =============================
-    //  Renderização (cards + pills)
+    //  Renderização
     // =============================
     const portalGrid = document.getElementById('portalGrid');
     const categorySelect = document.getElementById('categorySelect');
@@ -829,10 +799,9 @@
 
     const shownLinksEl = document.getElementById('shownLinks');
     const allLinksEl = document.getElementById('allLinks');
-    const totalLinksHero = document.getElementById('totalLinks');
 
     function safeExternalLink(url) {
-      // Normaliza levemente; mantém exatamente o href final
+      // Normaliza/valida
       try {
         const u = new URL(url);
         return u.toString();
@@ -859,8 +828,11 @@
         const a = document.createElement('a');
         a.className = 'link-cut';
         a.href = safeExternalLink(link.url);
-        a.target = '_blank';
-        a.rel = 'noopener';
+
+        // IMPORTANTE: para funcionar em navegadores embutidos (Instagram/WhatsApp etc.),
+        // evitamos target="_blank" (muitas vezes é bloqueado e parece que “não acontece nada”).
+        a.target = '_self';
+
         a.title = link.url;
         a.innerHTML = `↗ <span>${link.label}</span>`;
         linksWrap.appendChild(a);
@@ -896,7 +868,6 @@
         const cardCat = card.dataset.category;
         const matchCat = (cat === 'Todas as categorias') || (cardCat === cat);
 
-        // Busca por links dentro do card
         let matchText = false;
         if (!q) {
           matchText = true;
@@ -908,15 +879,11 @@
         const visible = matchCat && matchText;
         card.style.display = visible ? '' : 'none';
 
-        if (visible) {
-          // Conta links visíveis
-          shown += card.querySelectorAll('a.link-cut').length;
-        }
+        if (visible) shown += card.querySelectorAll('a.link-cut').length;
       }
 
       shownLinksEl.textContent = shown.toLocaleString('pt-BR');
       allLinksEl.textContent = all.toLocaleString('pt-BR');
-      totalLinksHero.textContent = all.toLocaleString('pt-BR');
     }
 
     async function copyAllLinksToClipboard() {
@@ -928,7 +895,6 @@
         copyAllBtn.innerHTML = '✅ <span class="tiny">Copiado</span>';
         setTimeout(() => (copyAllBtn.innerHTML = '📋 <span class="tiny">Copiar lista</span>'), 1200);
       } catch {
-        // fallback
         const ta = document.createElement('textarea');
         ta.value = text;
         document.body.appendChild(ta);
@@ -968,9 +934,7 @@
     }
 
     document.querySelectorAll('.gallery-item').forEach(item => {
-      item.addEventListener('click', () => {
-        openModal(item.dataset.src, item.dataset.title);
-      });
+      item.addEventListener('click', () => openModal(item.dataset.src, item.dataset.title));
     });
 
     modalClose.addEventListener('click', closeModal);
@@ -978,8 +942,9 @@
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && imgModal.classList.contains('open')) closeModal(); });
 
     modalOpen.addEventListener('click', () => {
+      // Tenta abrir; se o navegador bloquear pop-up, o usuário ainda pode dar “abrir imagem” pelo menu.
       if (!currentModalSrc) return;
-      window.open(currentModalSrc, '_blank', 'noopener');
+      window.location.href = currentModalSrc;
     });
 
     // =============================
@@ -1017,7 +982,6 @@
 
     counterClose.addEventListener('click', () => setCounterVisible(false));
 
-    // Restaura estado
     if (localStorage.getItem('counter_hidden') === '1') {
       accessCounterEl.style.display = 'none';
     }
@@ -1041,8 +1005,7 @@
         const count = Array.isArray(data) && data[0] ? (data[0].view_count || 0) : 0;
         accessCountEl.textContent = count.toLocaleString('pt-BR');
         return count;
-      } catch (error) {
-        // Mostra algo discreto sem quebrar a página
+      } catch {
         accessCountEl.textContent = '—';
         return 0;
       }
@@ -1063,9 +1026,7 @@
           body: JSON.stringify({ target_page: PAGE_NAME }),
         });
 
-        if (response.ok) {
-          sessionStorage.setItem(SESSION_KEY, 'true');
-        }
+        if (response.ok) sessionStorage.setItem(SESSION_KEY, 'true');
       } catch {
         // silencioso
       }
@@ -1096,11 +1057,10 @@
 
       copyAllBtn.addEventListener('click', copyAllLinksToClipboard);
 
-      // Conte as links no hero/metadata
+      // números iniciais
       const total = flattenLinks().length;
-      document.getElementById('allLinks').textContent = total.toLocaleString('pt-BR');
-      document.getElementById('shownLinks').textContent = total.toLocaleString('pt-BR');
-      document.getElementById('totalLinks').textContent = total.toLocaleString('pt-BR');
+      allLinksEl.textContent = total.toLocaleString('pt-BR');
+      shownLinksEl.textContent = total.toLocaleString('pt-BR');
     }
 
     document.addEventListener('DOMContentLoaded', () => {
