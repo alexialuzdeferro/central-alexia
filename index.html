@@ -494,23 +494,6 @@
 
     .counter-number { color: rgba(6,255,165,0.95); font-weight: 900; font-variant-numeric: tabular-nums; }
 
-    .counter-close {
-      margin-left: 2px;
-      width: 24px;
-      height: 24px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 9999px;
-      border: 1px solid rgba(255,255,255,0.12);
-      background: rgba(0,0,0,0.18);
-      color: rgba(255,255,255,0.70);
-      cursor: pointer;
-      transition: transform 0.18s ease, border-color 0.18s ease, opacity 0.18s ease;
-      opacity: 0.85;
-    }
-
-    .counter-close:hover { transform: scale(1.05); border-color: rgba(6,255,165,0.45); opacity: 1; }
 
     /* Scrollbar */
     ::-webkit-scrollbar { width: 10px; }
@@ -535,7 +518,6 @@
       <span class="counter-icon" aria-hidden="true">👁️</span>
       <span class="counter-text">Visitas</span>
       <span class="counter-number" id="accessCount">—</span>
-      <button class="counter-close" id="counterClose" title="Ocultar contador" aria-label="Ocultar contador">×</button>
     </div>
   </div>
 
@@ -973,18 +955,10 @@
 
     const accessCountEl = document.getElementById('accessCount');
     const accessCounterEl = document.getElementById('accessCounter');
-    const counterClose = document.getElementById('counterClose');
 
-    function setCounterVisible(visible) {
-      accessCounterEl.style.display = visible ? '' : 'none';
-      localStorage.setItem('counter_hidden', visible ? '0' : '1');
-    }
-
-    counterClose.addEventListener('click', () => setCounterVisible(false));
-
-    if (localStorage.getItem('counter_hidden') === '1') {
-      accessCounterEl.style.display = 'none';
-    }
+    // Contador deve sempre aparecer: remove legado de "ocultar"
+    try { localStorage.removeItem('counter_hidden'); } catch {}
+    if (accessCounterEl) accessCounterEl.style.display = '';
 
     async function fetchAccessCount() {
       try {
